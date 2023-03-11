@@ -8,7 +8,6 @@ class NotWrongHttpStatus(Exception):
     pass
 
 
-
 class UnknownStatusHomework(Exception):
     "Исключение - неизвестный статус домашки."
     pass

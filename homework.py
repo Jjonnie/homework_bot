@@ -6,7 +6,7 @@ import telegram
 from dotenv import load_dotenv
 from http import HTTPStatus
 from exceptions import (
-    NotWrongHttpStatus, NotSendMessage, TokensNotFound, UnknownStatusHomework
+    NotWrongHttpStatus, NotSendMessage, UnknownStatusHomework
 )
 
 load_dotenv()
