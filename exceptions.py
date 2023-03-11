@@ -1,18 +1,14 @@
 class NotSendMessage(Exception):
+    "Исключение - сообщение не отправлено."
     pass
 
 
 class NotWrongHttpStatus(Exception):
+    "Исключение - эндпоинт с API недоступен."
     pass
 
-
-class KeyNotFound(Exception):
-    pass
-
-
-class TokensNotFound(Exception):
-    pass
 
 
 class UnknownStatusHomework(Exception):
+    "Исключение - неизвестный статус домашки."
     pass

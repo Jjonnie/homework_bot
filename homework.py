@@ -49,18 +49,18 @@ def check_tokens():
     return True
 
 
-def send_message(bot, message):
+def send_message(bot, message: str) -> None:
     """Отправка сообщения в телеграм."""
     try:
         bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message)
         logger.debug(f'Сообщение {message} отправлено.')
     except telegram.error.TelegramError as error:
         error_message = f'Ошибка при отправке сообщения: {error}'
-        logger.error('Сообщение {message} не отправлено!')
+        logger.error(f'Сообщение {message} не отправлено!')
         raise NotSendMessage(error_message)
 
 
-def get_api_answer(current_timestamp):
+def get_api_answer(current_timestamp: int) -> dict:
     """Запрос к эндпоинту API Yandex-Practicum."""
     params = {'from_date': current_timestamp}
     try:
@@ -80,7 +80,7 @@ def get_api_answer(current_timestamp):
     return status_homework.json()
 
 
-def check_response(response):
+def check_response(response: dict) -> dict:
     """
     Проверка корректности ответа API.
     Функция возвращает список домашних работ.
@@ -95,7 +95,7 @@ def check_response(response):
     return homeworks
 
 
-def parse_status(homeworks):
+def parse_status(homeworks: dict) -> str:
     """Функция извлекает статус домашней работы."""
     homework_name = homeworks.get('homework_name')
     status_homework = homeworks.get('status')
@@ -107,7 +107,7 @@ def parse_status(homeworks):
         raise KeyError(
             'Отсутствуют ключ <homework_status>.'
         )
-    if status_homework == 'unknown':
+    if status_homework not in HOMEWORK_VERDICTS:
         raise UnknownStatusHomework('Неизвестный статус домашки.')
     verdict = HOMEWORK_VERDICTS.get(status_homework)
     return f'Изменился статус проверки работы "{homework_name}". {verdict}'
@@ -120,7 +120,7 @@ def main():
 
     if not check_tokens():
         logger.critical('Отсутствуют токены!')
-        raise TokensNotFound('Токены не обнаружены!')
+        raise SystemExit('Токены не обнаружены!')
 
     current_timestamp = int(time.time())
 
