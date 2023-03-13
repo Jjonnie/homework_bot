@@ -1,3 +1,4 @@
+import sys
 import os
 import logging
 import time
@@ -49,7 +50,7 @@ def check_tokens():
     return True
 
 
-def send_message(bot, message: str) -> None:
+def send_message(bot: telegram.Bot, message: str) -> None:
     """Отправка сообщения в телеграм."""
     try:
         bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message)
@@ -120,7 +121,7 @@ def main():
 
     if not check_tokens():
         logger.critical('Отсутствуют токены!')
-        raise SystemExit('Токены не обнаружены!')
+        sys.exit(0)
 
     current_timestamp = int(time.time())
 
